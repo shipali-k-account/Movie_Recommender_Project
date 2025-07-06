@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <title>Movie Recommender</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h1 class="text-center mb-4 fw-bold">🎬 Movie Recommender</h1>
+
+    <!-- Genre Suggestion Buttons -->
+    <div class="mb-4 text-center">
+      <span class="badge bg-secondary mx-1 genre-suggestion" style="cursor: pointer;">Action</span>
+      <span class="badge bg-secondary mx-1 genre-suggestion" style="cursor: pointer;">Comedy</span>
+      <span class="badge bg-secondary mx-1 genre-suggestion" style="cursor: pointer;">Drama</span>
+      <span class="badge bg-secondary mx-1 genre-suggestion" style="cursor: pointer;">Thriller</span>
+      <span class="badge bg-secondary mx-1 genre-suggestion" style="cursor: pointer;">Romantic</span>
+    </div>
+
+    <!-- Input Form -->
+    <form method="POST" class="d-flex justify-content-center mb-4">
+      <input type="text" name="genre" class="form-control w-50 me-2"
+             placeholder="Enter genre like comedy, romantic"
+             value="{{ genre_input or '' }}" required>
+      <button type="submit" class="btn btn-success">Get Recommendations</button>
+    </form>
+
+    <!-- Error Message -->
+    {% if error %}
+      <div class="alert alert-warning text-center w-50 mx-auto">
+        {{ error }}
+      </div>
+    {% endif %}
+
+    <!-- Loading Spinner -->
+    <div id="spinner" class="text-center d-none">
+      <div class="spinner-border text-success" role="status"></div>
+      <p class="mt-2">Fetching recommendations...</p>
+    </div>
+
+    <!-- Movie Recommendations -->
+    {% if recommendations %}
+      <div class="text-center">
+        <h3 class="mb-3 fw-semibold">Top Recommendations:</h3>
+       <div class="row justify-content-center">
+  {% for movie in recommendations %}
+    <div class="col-md-5 col-lg-4 mb-3">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h6 class="card-title"><i class="bi bi-film text-success me-2"></i>{{ movie[0] }}</h6>
+          <p class="card-subtitle text-muted small">{{ movie[1] }}</p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center text-muted py-3 small">
+    &copy; {{ current_year }} Movie Recommender
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Spinner toggle on submit
+    const form = document.querySelector("form");
+    const spinner = document.getElementById("spinner");
+    form.addEventListener("submit", () => {
+      spinner.classList.remove("d-none");
+    });
+
+    // Genre quick-pick
+    document.querySelectorAll(".genre-suggestion").forEach(el => {
+      el.addEventListener("click", () => {
+        document.querySelector("input[name='genre']").value = el.textContent;
+      });
+    });
+  </script>
+</body>
+</html>
