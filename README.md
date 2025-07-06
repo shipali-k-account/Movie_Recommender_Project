@@ -62,23 +62,26 @@ It contains 27,000+ movies with titles and genre information.
 
 movie_recommender_project2/
 │
+├── app.py                 # Flask backend
+├── recommender.py         # Machine learning recommendation logic
+├── data_cleaning.py       # Script for cleaning and preparing movie dataset
+│
 ├── data/
-│ ├── movie.csv # Original movie dataset
-│ └── clean_movie.csv # Preprocessed movie data
+│   ├── movie.csv          # Original movie dataset
+│   └── clean_movie.csv    # Preprocessed movie data
 │
 ├── static/
-│ └── style.css # Custom CSS styles
+│   └── style.css          # Custom CSS styles
 │
 ├── templates/
-│ └── index.html # Frontend page
+│   └── index.html         # Frontend HTML page
 │
-├── app.py # Flask backend
-├── recommender.py # Machine learning logic
-├── data_cleaning.py # Data preprocessing
-├── README.md # Project documentation
-└── screenshots/
-├── homepage.png
-└── recommendations.png
+├── screenshots/
+│   ├── homepage.png       # Homepage screenshot
+│   └── recommendations.png# Recommendation result screenshot
+│
+└── README.md              # Project documentation
+
 
 🚀 How to Run This Project
 
